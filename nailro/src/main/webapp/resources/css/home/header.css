@@ -1,0 +1,153 @@
+@CHARSET "UTF-8";
+/*유저 헤더*/
+.header-h1{text-align:left;background-color: darkblue}
+.header-span{position:absolute;top:20px;right:10px;text-align: right;}
+.header-section{position: relative}    
+a, a:hover {  text-decoration:none; }
+ul{list-style:none;}
+/* navigation */
+.nav {
+     font-family: arial, sans-serif;
+     position: relative;
+     font-size:12px;
+     color:#333;
+     margin: 10px auto 0;
+     z-index: 200;
+}
+.nav > ul {
+border-bottom:5px solid rgba(202, 211, 227, 1); /*라인 색  */}
+ .nav > ul:after {display:block; content:''; clear:both}
+.nav > ul > li {
+     float: left;
+     width:16.6%;
+     position: relative;
+     margin-bottom:5px;
+}
+.nav ul.sub {
+    display:none; 
+    width:100%; 
+    position:absolute; 
+    top:37px; 
+    left:0;
+    border-bottom: 1px solid #d6d6d6;
+}
+.nav li.on .sub {display:block}
+.nav .item {
+    text-align: center;
+    padding:10px 25px;
+    display:block;
+    text-decoration:none;
+    color:#c0c0c0;
+    font-weight:bold;
+    text-shadow:-1px 0px 0px #bbb;
+    margin:0px 1px;
+    background: #d1dfe8;
+    background: -moz-linear-gradient(top, #d1dfe8 0%, #98c1d3 44%, #8ab9cd 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d1dfe8), color-stop(44%,#98c1d3), color-stop(100%,#8ab9cd));
+    background: -webkit-linear-gradient(top, #d1dfe8 0%,#98c1d3 44%,#8ab9cd 100%); 
+    background: -o-linear-gradient(top, #d1dfe8 0%,#98c1d3 44%,#8ab9cd 100%); 
+    background: -ms-linear-gradient(top, #d1dfe8 0%,#98c1d3 44%,#8ab9cd 100%); 
+    background: linear-gradient(top, #d1dfe8 0%,#98c1d3 44%,#8ab9cd 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d1dfe8', endColorstr='#8ab9cd',GradientType=0 );
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    -moz-border-top-left-radius: 5px;
+    -moz-border-top-right-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+}
+.nav .sub .item{
+      padding : 10px 0;
+      color : #666;
+      background : #4571ba;
+      border : 1px solid #d6d6d6;
+      border-bottom : 0;
+      border-top : 1px dotted #d6d6d6;
+      border-radius : 0;
+      -moz-border-radius : 0;
+      -webkit-border-radius : 0;
+      font-weight: normal;
+      margin : 0px 1px;
+      text-shadow : 0 0 0;}
+.nav .sub li:first-child a{border-top:1px dotted #d6d6d6}
+.txt-darkgray{color:#808080}
+/*관리자 */
+#admin-header{
+   height : 70px;
+   width: 100%;
+}
+/*제목   */
+#h2Div{
+margin-left: 50%;
+margin-top: 10px;
+}
+/*로고  */
+.logo{
+	float: left;
+    margin-left: 80px; 
+}
+.logo a{
+	text-decoration: none;
+}
+.logo a img{
+	width: 150px;
+	height:70px;
+}
+#h2Div a:HOVER{
+color:  white;
+}
+/*GNB */
+.gnb{
+    margin-right : 50px;
+    float: right;
+   
+	}
+.gnb a{
+	color: black;
+	font-family: sans-serif;
+}
+.gnb a:HOVER{
+	color: #ffffff;
+}
+#lnb{
+	
+	height: 70px;
+	width : 100%;
+	font-size: 25px ;
+	font-style: "돋움";
+	word-spacing: normal;
+	margin-bottom: 10px;
+}
+#adminlnb{
+	background-image: url("../../image/home/cloud.jpg");
+	height: 70px;
+	width : 100%;
+	/* margin-top: 40px; */
+	font-size: 25px ;
+	font-style: "돋움";
+	word-spacing: normal;
+	margin-bottom: 10px;
+}
+#adminlnb nav{
+	list-style: none;
+}
+/*리스트 ul  */
+#adminlnb nav ul{
+list-style: none;
+margin-left: 300px;
+padding-top: 20px;
+}
+
+.aminUl{
+list-style: none;
+margin-left: 25%;
+padding-top: 20px;
+}
+/*리스트 li 가로 정렬을 여기서한다.   */
+#adminlnb nav ul li{
+	text-align : center;
+	float: left;
+}
+#adminlnb nav ul li a:HOVER{
+	color: gray;
+}

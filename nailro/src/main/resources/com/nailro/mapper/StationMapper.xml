@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nailro.mapper.StationMapper">
+    <select id="list" parameterType="Station" resultType="Station" >
+		select STATION_CODE stationCode,STATION_NAME stationName,DISTANCE distance
+		 from station order by STATION_CODE desc
+    </select>  
+     <insert id="insert" parameterType="Station">
+        insert into station(station_code,station_name,distance) values('stn'||stationseq.nextval,#{stationName},#{distance})
+    </insert>    
+    <update id="update" parameterType="Station" >
+        update station set station_name=#{stationName}, 
+                          distance=#{distance}
+        where station_code=#{stationCode}
+    </update>
+     <delete id="delete" parameterType="String">
+        delete from station where station_code=#{stationCode} 
+    </delete>
+    <select id="search" resultType="Station" parameterType="Command">
+      select * 
+      from station 
+      where STATION_CODE = #{stationCode}
+    </select>
+    <select id="countAll" resultType="int">
+		select count(*) from station
+	</select>
+</mapper>

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nailro.mapper.EventMapper"> <!-- 맵퍼지정 -->
+<!-- 패키지 상품 전체(admin)  -->
+<select id="list" resultType="Event" parameterType="Command">
+ select t2.*
+ from (
+   select rownum as SEQ, t.*
+           from (
+               select 
+                 rownum as num,
+                 e.PKG_CODE as pkgCode,
+                 e.AREA_CODE as areaCode, 
+                 e.PKG_NAME as pkgName,
+                 to_char(e.PKG_TERMA,'yyyy-mm-dd') as pkgTermA,
+                 to_char(e.PKG_TERMB,'yyyy-mm-dd') as pkgTermB,
+                 e.PKG_TEL as pkgTel,
+                 e.SALER_CODE as salerCode,
+                 e.MT_CODE as mtCode,
+                 e.PKG_KEEP_CODE as pkgKeepCode,
+                 e.PKG_PRICE as pkgPrice,
+                 e.PKG_ABOUT as pkgAbout,
+                 e.GRADE as grade,
+                 e.PATH as path
+        from pkg_goods e
+         order by rownum desc
+           )t)t2
+           where t2.SEQ between #{start} and #{end}
+           order by t2.SEQ asc
+</select>
+<!-- 숙소 리스트 -->
+<select id="mtList" resultType="Event" parameterType="Command">
+	select 	MT_CODE as mtCode,
+				MT_ADDRESS as mtAddress,
+				MT_NAME as mtName,
+				MT_PHONE as mtPhone,
+				MT_INFO as mtInfo,
+				MT_ABOUT as mtAbout,
+				MT_PRICE as mtPrice
+	from PKG_MT
+	order by MT_CODE 
+</select>
+<!-- 판매자 리스트 -->
+<select id="salerList" resultType="Event" parameterType="Command">
+	select 	SALER_CODE as salerCode,
+				SALER_Name as salerName,
+				SALER_PHONE as salerPhone
+	from SALER
+	order by SALER_CODE 
+</select>
+<!-- 전체 상품 리스트(user) -->
+<select id="goodsList" resultType="Event" parameterType="Command">
+		select 
+			p.pkg_code as pkgCode,
+			p.area_code as areaCode,
+			a.area_name as areaName,
+			p.PKG_NAME as pkgName,
+			to_char(p.PKG_TERMA,'yyyy-mm-dd') as pkgTermA,
+			to_char(p.PKG_TERMB,'yyyy-mm-dd') as pkgTermB,
+			p.PKG_TEL as pkgTel,
+			p.SALER_CODE as salerCode,
+			p.MT_CODE as mtCode,
+			p.PKG_KEEP_CODE as pkgKeepCode,
+			p.PKG_PRICE as pkgPrice,
+			p.PKG_ABOUT as pkgAbout,
+			p.GRADE as grade,
+			p.PATH as path,
+			m.MT_CODE as mtCode,
+			m.MT_ADDRESS as mtAddress,
+			m.MT_NAME as mtName,
+			m.MT_PHONE as mtPhone,
+			m.MT_INFO as mtInfo,
+			m.MT_ABOUT as mtAbout,
+			m.MT_PRICE as mtPrice
+		from pkg_goods p , pkg_mt m, AREA a
+		where  p.mt_code=m.mt_code
+			and p.AREA_CODE = a.AREA_CODE
+</select>
+
+<select id="userDetail" resultType="Event" parameterType="Command">
+select 
+		p.pkg_code as pkgCode,
+		p.area_code as areaCode,
+		p.PKG_NAME as pkgName,
+		to_char(p.PKG_TERMA,'yyyy-mm-dd') as pkgTermA,
+		to_char(p.PKG_TERMB,'yyyy-mm-dd') as pkgTermB,
+		p.PKG_TEL as pkgTel,
+		p.SALER_CODE as salerCode,
+		p.MT_CODE as mtCode,
+		p.PKG_KEEP_CODE as pkgKeepCode,
+		p.PKG_PRICE as pkgPrice,
+		p.PKG_ABOUT as pkgAbout,
+		p.GRADE as grade,
+		p.PATH as path,
+		A.AREA_NAME as areaName,
+		m.MT_CODE as mtCode,
+		m.MT_ADDRESS as mtAddress,
+		m.MT_NAME as mtName,
+		m.MT_PHONE as mtPhone,
+		m.MT_INFO as mtInfo,
+		m.MT_ABOUT as mtAbout,
+		m.MT_PRICE as mtPrice
+		from pkg_goods p , pkg_mt m, area a
+		where  p.mt_code=m.mt_code and p.pkg_code =#{searchVal}
+			 and P.AREA_CODE = A.AREA_CODE
+</select>
+<!-- 패키지예약 INSERT -->
+<insert id="ReserveInsert" parameterType="Event">
+insert into PKG_RESERVATION(PKG_KEEP_CODE,RESEVE_CODE,PKG_RES_DATE,ID,PAY,PKG_CODE)
+VALUES(pkgReserve_seq.NEXTVAL,#{reserveCode},#{startDate},#{userid},#{pkgPrice},#{pkgCode})
+</insert>
+
+<!-- 패키지 입력  -->
+<insert id="insert" parameterType="Event">
+	insert into 
+		PKG_GOODS(PKG_CODE,AREA_CODE,PKG_NAME,PKG_TERMA,PKG_TERMB,
+		PKG_TEL,SALER_CODE,MT_CODE,PKG_KEEP_CODE,PKG_PRICE,PKG_ABOUT,GRADE,PATH)
+		values(#{pkgCode,jdbcType=NVARCHAR},#{areaCode},#{pkgName},#{pkgTermA,jdbcType=DATE},#{pkgTermB,jdbcType=DATE},#{pkgTel},
+			#{salerCode},#{mtCode},#{pkgKeepCode},#{pkgPrice,jdbcType=NUMERIC},#{pkgAbout},#{grade,jdbcType=NUMERIC},#{path})
+</insert>
+
+<!-- 숙소 입력  -->
+<insert id="mtInsert"  parameterType="Event">
+	insert 
+	into PKG_MT(MT_CODE,MT_ADDRESS,MT_NAME,MT_PHONE,MT_INFO,MT_ABOUT,MT_PRICE)
+	values(#{mtCode},#{mtAddress},#{mtName},#{mtPhone},#{mtInfo},#{mtAbout},#{mtPrice})
+</insert>
+<!-- 판매자 입력  -->
+<insert id="salerInsert"  parameterType="Event">
+	insert 
+	into saler(SALER_CODE,SALER_PHONE,SALER_NAME)
+	values(#{salerCode},#{salerPhone},#{salerName})
+</insert>
+<!--패키지 삭제 -->
+<delete id="delete" parameterType="String">
+	delete from PKG_GOODS
+	where PKG_CODE = #{value}
+</delete>
+<!-- 숙소 삭제 -->
+<delete id="mtDelete" parameterType="String">
+	delete from PKG_MT 
+	where MT_CODE =#{value}
+</delete> 
+<!-- 판매자 삭제 -->
+<delete id="salerDelete" parameterType="String">
+	delete from SALER
+	where SALER_CODE =#{value}
+</delete> 
+<!--패키지 수정  -->
+<update id="update" parameterType="Event">
+	update PKG_GOODS
+		<set>
+			<if test="areaCode != null">AREA_CODE = #{areaCode},</if>
+			<if test="pkgName != null">PKG_NAME = #{pkgName},</if> 
+			<if test="pkgTermA != null">PKG_TERMA = #{pkgTermA},</if> 
+			<if test="pkgTermB != null">PKG_TERMB = #{pkgTermB},</if> 
+			<if test="pkgTel != null">PKG_TEL = #{pkgTel},</if> 
+			<if test="salerCode != null">SALER_CODE = #{salerCode},</if> 	
+			<if test="mtCode != null">MT_CODE = #{mtCode},</if> 	
+			<if test="pkgKeepCode != null">PKG_KEEP_CODE = #{pkgKeepCode},</if> 	
+			<if test="pkgPrice != null">PKG_PRICE = #{pkgPrice},</if> 	
+			<if test="pkgAbout != null">PKG_ABOUT = #{pkgAbout},</if> 	
+			<if test="grade != null">GRADE = #{grade}</if> 	
+		</set>
+		where PKG_CODE = #{pkgCode}
+</update>
+<!--숙소 수정  -->
+<update id="mtUpdate" parameterType="Event">
+	update PKG_MT
+		<set>
+			<if test="mtAddress != null">MT_ADDRESS = #{mtAddress},</if>
+			<if test="mtName != null">MT_NAME = #{mtName},</if> 
+			<if test="mtPhone != null">MT_PHONE = #{mtPhone},</if> 
+			<if test="mtInfo != null">MT_INFO = #{mtInfo},</if> 
+			<if test="mtAbout != null">MT_ABOUT = #{mtAbout},</if> 
+			<if test="mtPrice != null">MT_PRICE = #{mtPrice}</if> 	
+		</set>
+		where MT_CODE = #{mtCode}
+</update>
+<!-- 판매자 수정 -->
+<update id="salerUpdate" parameterType="Event">
+	update SALER
+		<set>
+			<if test="salerPhone != null">SALER_PHONE = #{salerPhone},</if>
+			<if test="salerName != null">SALER_NAME= #{salerName}</if>
+		</set>
+		where SALER_CODE = #{salerCode}
+</update>
+<!-- 패키지  조회 -->
+<select id="detail" resultType="Event"  parameterType="Command">
+	select 	
+				g.PKG_CODE as pkgCode,
+				g.SALER_CODE as salerCode,
+				g.AREA_CODE as areaCode,
+				g.PKG_NAME as pkgName,
+				g.PKG_TERMA as pkgTermA,
+				g.PKG_TERMB as pkgTermB,
+				g.PKG_TEL as pkgTel,
+				g.MT_CODE as mtCode,
+				g.PKG_KEEP_CODE as pkgKeepCode,
+				g.PKG_PRICE as pkgPrice,
+				g.PKG_ABOUT as pkgAbout,
+				g.GRADE as grade,
+				m.MT_ADDRESS as mtAddress,
+				m.MT_NAME as mtName,
+				m.MT_PHONE as mtPhone,
+				m.MT_INFO as mtInfo,
+				m.MT_ABOUT as mtAbout,
+				m.MT_PRICE as mtPrice
+	from PKG_GOODS g join PKG_MT m
+	on G.PKG_CODE = #{searchKey}
+	where G.MT_CODE = m.MT_CODE
+</select>
+<!-- 숙소  조회 -->
+<select id="mtDetail" resultType="Event"  parameterType="Command">
+	select 	
+				MT_CODE as mtCode,
+				MT_ADDRESS as mtAddress,
+				MT_NAME as mtName,
+				MT_PHONE as mtPhone,
+				MT_INFO as mtInfo,
+				MT_ABOUT as mtAbout,
+				MT_PRICE as mtPrice
+	from PKG_MT
+	where MT_CODE = #{searchVal}
+</select>
+<!-- 판매자 조회 -->
+<select id="salerDetail" resultType="Event"  parameterType="Command">
+	select 	
+				SALER_CODE as salerCode,
+				SALER_PHONE as salerPhone,
+				SALER_NAME as salerName
+	from SALER
+	where SALER_CODE = #{searchVal}
+</select>
+
+<!-- 패키지 카운트 -->
+ <select id="count" resultType="int" parameterType="Command">
+        select count(*) from PKG_GOODS
+ </select>
+<!--패키지용 예매리스트  -->
+	<select id="pkgTrainReList" resultType="Erp">
+	select 
+    r.reseve_code reserveNo, s.run_train_code trainNo, r.start_station startStation, 
+	s.start_time startTime, r.end_station endStation, s.end_time endTime, s.seat_num seatNum, r.id id  
+    from RESERVE r, SEAT s
+    where R.SEAT_NUM = S.SEAT_NUM and
+	    R.RUN_TRAIN_CODE = S.RUN_TRAIN_CODE and
+	    R.START_TIME = S.START_TIME and
+    	id is null
+	</select>
+	<!--패키지용 예매확인  -->
+	<select id="pkgCheck" resultType="Event" parameterType="Command">
+select 
+    r.PKG_KEEP_CODE as pkgKeepCode,
+    to_char(r.pkg_res_date,'yyyy-mm-dd-hh24-MI') as startDate,
+    p.path as path,
+    p.pkg_name as pkgName,
+    p.pkg_tel as pkgTel,
+    p.pkg_price as pkgPrice
+ from pkg_reservation r , pkg_goods p
+ where r.pkg_code=p.pkg_code and id =#{searchVal}
+	</select>
+	<!-- 패키지예약상품 삭제  -->
+	<delete id="pkgCancel" parameterType="String">
+	delete  
+	from PKG_RESERVATION 
+	where PKG_KEEP_CODE = #{userId}
+	</delete>
+	<!-- 패키지 예약상품 갯수  -->
+	<select id="pkgReserveCount" resultType="int" parameterType="String">
+	 select count(*)
+	 from PKG_RESERVATION
+	 where ID = #{userId}
+	</select>
+	
+	<select id="pkgRank" resultType="Event" parameterType="Command">
+select  rank() over(order by t.grade desc) as grank,t.pkgCode,t.grade,t.pkgName,t.pkgPrice,t.path
+from
+	(select 
+            p.pkg_code as pkgCode,
+            p.area_code as areaCode,
+            a.area_name as areaName,
+            p.PKG_NAME as pkgName,
+            to_char(p.PKG_TERMA,'yyyy-mm-dd') as pkgTermA,
+            to_char(p.PKG_TERMB,'yyyy-mm-dd') as pkgTermB,
+            p.PKG_TEL as pkgTel,
+            p.SALER_CODE as salerCode,
+            p.MT_CODE as mtCode,
+            p.PKG_KEEP_CODE as pkgKeepCode,
+            p.PKG_PRICE as pkgPrice,
+            p.PKG_ABOUT as pkgAbout,
+            p.GRADE as grade,
+            p.PATH as path,
+            m.MT_CODE as mtCode,
+            m.MT_ADDRESS as mtAddress,
+            m.MT_NAME as mtName,
+            m.MT_PHONE as mtPhone,
+            m.MT_INFO as mtInfo,
+            m.MT_ABOUT as mtAbout,
+            m.MT_PRICE as mtPrice
+        from pkg_goods p , pkg_mt m, AREA a
+        where  p.mt_code=m.mt_code
+            and p.AREA_CODE = a.AREA_CODE order by grade desc) t
+     where rownum &lt; 4
+	</select>
+</mapper>

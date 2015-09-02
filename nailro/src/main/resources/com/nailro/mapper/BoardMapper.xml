@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nailro.mapper.BoardMapper">
+        
+	<select id="noticeList" resultType="Board" parameterType="Command" >
+				select t2.* 
+			        from (
+			        select rownum as SEQ, t.* from (
+			           select 
+			           n.BBS_NO as brdNo,
+			           n.BBS_TITLE as title,
+			           n.BBS_CONTENT as content,
+			           n.BBS_PATH as path,
+			           n.BBS_CNT as readCnt,
+			           to_char(n.BBS_DATE,'yyyy-mm-dd hh24:mi:ss') as boardDate
+			           from notice n
+			           order by boardDate desc
+			        )t)t2
+			        where t2.SEQ between #{start} and #{end}
+			        order by t2.SEQ asc
+    </select>
+    <select id="bbsList" resultType="Board" parameterType="Command" >
+    			select t2.* 
+			        from (
+			        select rownum as SEQ, t.* from (
+			           select 
+			           	b.BBS_NO as brdNo,
+						b.BBS_TITLE as title,
+						b.BBS_CONTENT as content,
+						b.BBS_PATH as path,
+						b.BBS_CNT as readCnt,
+						b.ID as id,
+						to_char(b.BBS_DATE,'yyyy-mm-dd hh24:mi:ss') as boardDate
+			           from BBS b
+			           order by boardDate desc
+			        )t)t2
+			        where t2.SEQ between #{start} and #{end}
+			        order by t2.SEQ asc
+    </select>
+    <select id="noticeCount" resultType="int" parameterType="Command">
+       select count(*) 
+          from NOTICE
+         where ${searchKey} like '%' || #{searchVal} || '%'
+    </select>
+    <select id="bbsCount" resultType="int" parameterType="Command">
+        select count(*) 
+          from BBS
+         where ${searchKey} like '%' || #{searchVal} || '%'
+    </select>
+    <select id="noticeAllCount" resultType="int" parameterType="Command">
+       select count(*) 
+          from NOTICE n
+       where n.BBS_TITLE like '%' || #{searchVal} || '%'
+       or n.BBS_CONTENT like '%' || #{searchVal} || '%'
+    </select>
+    <select id="bbsAllCount" resultType="int" parameterType="Command">
+        select count(*) 
+          from BBS b
+        where b.BBS_TITLE like '%' || #{searchVal} || '%'
+       or b.BBS_CONTENT like '%' || #{searchVal} || '%'
+       or b.ID like '%' || #{searchVal} || '%'
+    </select>
+    <select id="noticeSize" resultType="int" parameterType="Command">
+        select count(*) from NOTICE
+    </select>
+    <select id="bbsSize" resultType="int" parameterType="Command">
+        select count(*) from BBS
+    </select>
+    <select id="noticeDetail" resultType="Board" parameterType="Command">
+        select 
+           n.BBS_NO as brdNo,
+           n.BBS_TITLE as title,
+           n.BBS_CONTENT as content,
+           n.BBS_PATH as path,
+           n.BBS_CNT as readCnt,
+           to_char(n.BBS_DATE,'yyyy-mm-dd hh24:mi:ss') as boardDate
+           from NOTICE n
+           where BBS_NO = #{searchVal}
+    </select>
+ 	<select id="bbsDetail" resultType="Board" parameterType="Command">
+        select 
+           	b.BBS_NO as brdNo,
+			b.BBS_TITLE as title,
+			b.BBS_CONTENT as content,
+			b.BBS_PATH as path,
+			b.BBS_CNT as readCnt,
+			b.ID as id,
+			to_char(b.BBS_DATE,'yyyy-mm-dd hh24:mi:ss') as boardDate
+           from BBS b
+           where BBS_NO = #{searchVal}
+    </select> 
+    <select id="noticeSearch" resultType="Board" parameterType="Board">
+    	select t2.* from (select 
+    	rownum as SEQ,t.*
+        from (
+        select
+        n.BBS_NO as brdNo,
+        n.BBS_TITLE as title,
+        n.BBS_CONTENT as content,
+        n.BBS_PATH as path,
+        n.BBS_CNT as readCnt,
+        to_char(n.BBS_DATE,'yyyy-mm-dd hh24:mi:ss') as boardDate
+       
+       from NOTICE n
+       where ${searchKey} like '%' || #{searchVal} || '%'
+       order by boardDate desc) t)t2
+       where t2.SEQ between #{start} and #{end}
+       order by t2.SEQ asc
+	       
+    </select>
+   
+    <select id="bbsSearch" resultType="Board" parameterType="Board">    	
+       select t2.* from (select 
+    	rownum as SEQ,t.*
+        from (
+            select 
+           	b.BBS_NO as brdNo,
+			b.BBS_TITLE as title,
+			b.BBS_CONTENT as content,
+			b.BBS_PATH as path,
+			b.BBS_CNT as readCnt,
+			b.ID as id,
+			to_char(b.BBS_DATE,'yyyy-mm-dd hh24:mi:ss') as boardDate
+           from BBS b
+       where ${searchKey} like '%' || #{searchVal} || '%'
+       order by boardDate desc) t)t2
+       where t2.SEQ between #{start} and #{end}
+       order by t2.SEQ asc
+       
+    </select>
+     <select id="noticeAllSearch" resultType="Board" parameterType="Board">    	
+       select t2.* from (select 
+    	rownum as SEQ,t.*
+        from (
+        select
+        n.BBS_NO as brdNo,
+        n.BBS_TITLE as title,
+        n.BBS_CONTENT as content,
+        n.BBS_PATH as path,
+        n.BBS_CNT as readCnt,
+        to_char(n.BBS_DATE,'yyyy-mm-dd hh24:mi:ss') as boardDate
+       
+       from NOTICE n
+       where n.BBS_TITLE like '%' || #{searchVal} || '%'
+       or n.BBS_CONTENT like '%' || #{searchVal} || '%'
+       order by boardDate desc) t)t2
+       where t2.SEQ between #{start} and #{end}
+       order by t2.SEQ asc
+    </select>
+    <select id="bbsAllSearch" resultType="Board" parameterType="Board">
+    select t2.* from (select 
+    	rownum as SEQ,t.*
+        from (
+        select 
+           	b.BBS_NO as brdNo,
+			b.BBS_TITLE as title,
+			b.BBS_CONTENT as content,
+			b.BBS_PATH as path,
+			b.BBS_CNT as readCnt,
+			b.ID as id,
+			to_char(b.BBS_DATE,'yyyy-mm-dd hh24:mi:ss') as boardDate
+           from BBS b
+       where b.BBS_TITLE like '%' || #{searchVal} || '%'
+       or b.BBS_CONTENT like '%' || #{searchVal} || '%'
+       or b.ID like '%' || #{searchVal} || '%'
+       order by boardDate desc) t)t2
+       where t2.SEQ between #{start} and #{end}
+       order by t2.SEQ asc       
+    </select>
+    
+    <insert id="noticeInsert" parameterType="Board">
+        insert into NOTICE(BBS_NO,BBS_TITLE,BBS_CONTENT,BBS_PATH,BBS_CNT,BBS_DATE)
+        values(BBS_NO.nextval,#{title},#{content},<if test="path == null">'defualt.png'</if>,0,sysdate)
+    </insert>
+    
+    <insert id="bbsInsert" parameterType="Board">
+    insert into BBS (BBS_NO,ID,BBS_TITLE,BBS_CONTENT,BBS_PATH,BBS_CNT,BBS_DATE)
+        values(REVIEW_SEQ.nextval,#{id},#{title},#{content},<if test="path == ''">'defualt.png'</if><if test="path != ''">#{path}</if>,0,sysdate)
+    </insert>
+    
+    <update id="noticeUpdate" parameterType="Board" >
+        update NOTICE 
+	        <set>
+				<if test="title != null"> BBS_TITLE=#{title},</if>
+				<if test="content != null"> BBS_CONTENT = #{content},</if>
+				<if test="path == null">BBS_PATH = 'defualt.png',</if>
+				<if test="readCnt != null"> BBS_CNT=#{readCnt},</if>
+				<if test="boardDate == null">BBS_DATE=sysdate</if>
+			</set>
+        where BBS_NO = #{brdNo}
+    </update>
+    <update id="bbsUpdate" parameterType="Board" >
+        update BBS <set>
+				<if test="title != null"> BBS_TITLE=#{title},</if>
+				<if test="content != null"> BBS_CONTENT = #{content},</if>
+				<if test="path != '' ">BBS_PATH = #{path},</if>					
+				<if test="readCnt != null"> BBS_CNT = #{readCnt},</if>
+				<if test="boardDate == null">BBS_DATE = sysdate</if>
+			</set>
+        where BBS_NO = #{brdNo}
+    </update>
+    
+    <update id="noticeBrdCnt" parameterType="Board" >
+        update NOTICE set BBS_CNT = #{searchVal}
+        where BBS_NO = #{searchKey}
+    </update>
+    
+    <update id="bbsBrdCnt" parameterType="Board" >
+        update BBS set BBS_CNT = #{searchVal}
+        where BBS_NO = #{searchKey}
+    </update>    
+    
+    
+    <!-- delete 삭제 -->
+    <delete id="noticeDelete" parameterType="Board">
+        delete from NOTICE where BBS_NO = #{brdNo}
+    </delete>
+    
+    <delete id="bbsDelete" parameterType="Board">
+        delete from BBS where BBS_NO = #{brdNo} 
+    </delete>
+    
+    
+    
+    
+    <insert id="repleInsert" parameterType="Board">
+    insert into REPLE (BBS_NO,REPLE_NO,ID,REPLE_CONTENT,REPLE_DATE)
+        values(#{brdNo},REVIEW_SEQ.nextval,#{id},#{repleContent},sysdate)
+    </insert>
+    
+    <delete id="repleDelete" parameterType="Board">
+        delete from REPLE where REPLE_NO = #{repleNo}
+    </delete>
+    
+    <select id="repleList" resultType="Board" parameterType="Board">
+      select t2.* from (select 
+      rownum as SEQ,t.*
+      from (
+      select 
+      r.BBS_NO as brdNo,
+   	  r.REPLE_NO as repleNo,
+	  r.REPLE_CONTENT as repleContent,
+	  r.ID as id,
+	  to_char(r.REPLE_DATE,'yyyy-mm-dd hh24:mi:ss') as repleDate
+      from REPLE r
+      where r.BBS_NO = #{brdNo}
+      order by r.REPLE_DATE desc) t)t2
+      where t2.SEQ between #{repleStart} and #{repleEnd}
+      order by t2.SEQ asc 
+      
+    </select>
+    
+    <select id="repleSize" resultType="int" parameterType="Command">
+        select count(*) 
+          from REPLE r
+        where r.BBS_NO = #{searchVal}
+    </select>
+
+    
+    <delete id="subDelete" parameterType="Board">
+        delete from REPLE where BBS_NO = #{brdNo}
+	</delete>
+
+    
+    
+    
+</mapper>

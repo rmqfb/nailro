@@ -1,0 +1,65 @@
+@CHARSET "UTF-8";
+/*웹  */
+/*로고  */
+/* #logo{
+	float : left;
+	width: 100px;
+	margin: 40px 0 0 40px;
+} */
+/*섹션 */
+.sectionClass{
+	/* margin-top : 60px;  수정*/
+/* 	width: 100%;
+	height: 80%; */
+
+}
+/*메인뷰  */
+/* #mainview{
+	width:80%;
+	height : 80%;
+	margin-left: 10%;
+	 
+} */
+/*섹션 의 베스트   */
+.bestDiv{
+/* 	border: 1px solid black; 
+	float: left;
+    width: 63%; 
+    height: 50%; */
+    
+}
+/*섹션의 로그인  */
+.sectionClass .loginDiv{
+	/* border: 1px solid black;
+	float: right;
+    height : 50%;
+	width: 35%; 
+	margin-top: 0; */
+	
+}
+/*섹션의 게시판  */
+.sectionClass .boardDiv{
+	/* border: 1px solid black;
+	float : left;
+    width: 63%;
+    height:46%;
+    margin-top: 20px; */
+}
+/*섹션의 예매하기   */
+#resverseDiv{
+	border: 1px solid black;
+	height : 200px;
+	width  : 300px;
+	background-color: rgb(33, 145, 192);
+}
+#resverseDiv table tr{border: 1px solid black;}
+#resverseDiv table td{border: 1px solid black;}
+/* 게시판 예매하기 단  */
+#boreDiv{
+	/* height: 100%;
+	width: 100%;
+	clear: both;
+	margin-top: 35px; */
+}
+
+

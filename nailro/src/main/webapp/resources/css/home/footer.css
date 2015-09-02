@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+footer{
+    text-align: center;
+    /* background-image: url("../../image/home/cloud.jpg"); */
+    background-color : rgba(201, 210, 226, 1);
+    height: 120px;
+    border-top: 1px solid black;  
+    width: 1070px;
+}
+    /* footer */
+#footer{background:#fff url(http://www.letskorail.com/images/footer_bg.gif) repeat-x left top}
+.f_box{width:1070px;padding-top:5px;margin:0 auto;text-align:left}
+.f_info{overflow:hidden;width:1070px;height:27px;}
+.f_info ul{float:left;margin-top:2px}
+.f_info li{float:left}
+.f_info .korail_fmy{float:right}
+.f_info select{height:21px;border:1px solid #bdbdbd;vertical-align:middle}
+.f_info input.btn{vertical-align:middle}
+.f_cont{overflow:hidden;height:67px;width:1070px;}
+.f_cont h6{float:left;margin-top:14px}
+.f_cont .add{float:right;margin-top:20px}
+.f_cont .copy{text-align:right}
+/* basic end */

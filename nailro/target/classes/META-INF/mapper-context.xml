@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="autoMappingBehavior" value="PARTIAL" />
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="defaultStatementTimeout" value="25" />
+		<setting name="safeRowBoundsEnabled" value="false" />
+		<setting name="mapUnderscoreToCamelCase" value="false" />
+		<setting name="localCacheScope" value="SESSION" />
+		<setting name="jdbcTypeForNull" value="OTHER" />
+		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
+	</settings>
+	<!-- mapper sql 문에서 사용할 타입지정  alias 객체  -->
+	<typeAliases>
+	<typeAlias type="com.nailro.domain.MemberDto" alias="Member"/>
+	<typeAlias type="com.nailro.domain.BoardDto" alias="Board"/>
+	<typeAlias type="com.nailro.domain.ReserveDto" alias="Erp"/>
+	<typeAlias type="com.nailro.domain.EventDto" alias="Event"/>
+	<typeAlias type="com.nailro.domain.RailLineDto" alias="Rail"/>
+	<typeAlias type="com.nailro.domain.TrainDto" alias="Train"/>
+	<typeAlias type="com.nailro.domain.StationDto" alias="Station"/>
+    <typeAlias type="com.nailro.domain.RunTrainDto" alias="RunTrain"/>
+	<typeAlias type="com.nailro.factory.Orderable" alias="Command"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="com/nailro/mapper/MemberMapper.xml" />
+		<mapper resource="com/nailro/mapper/ErpMapper.xml" />
+		<mapper resource="com/nailro/mapper/BoardMapper.xml" />
+		<mapper resource="com/nailro/mapper/EventMapper.xml" />
+		<mapper resource="com/nailro/mapper/RailLineMapper.xml" />
+		<mapper resource="com/nailro/mapper/StationMapper.xml" />
+		<mapper resource="com/nailro/mapper/TrainMapper.xml" />
+	</mappers>
+</configuration>

@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+.td{
+	border: 1px solid black;
+	text-align: center;
+}
+.table{
+	text-align: center;
+	border-collapse: collapse;
+}
+#mainviewseat{
+	height: 750px;
+}
+#seat-Select{
+	text-align: center;
+}
+#seat-table{
+	background-color: #5CD1E5;
+}
+#seat{
+	margin-left: 257px;
+}

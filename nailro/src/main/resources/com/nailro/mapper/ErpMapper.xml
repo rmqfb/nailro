@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nailro.mapper.ErpMapper">
+<!--수익관리 -->
+<select id="profit" resultType="Erp">
+select reseve_code as resevecode , train_name as trainname ,pay as pay , start_time as starttime from v_profit
+</select> 
+<!--운행열차  -->
+<select id="runtrain" resultType="Erp" parameterType="Erp">
+select train_Code as trainCode  from V_RUN_TRAINLIST1 
+<![CDATA[
+where RUN_TRAIN_DATE >= TO_DATE(#{startDate},'MMDDYYYY') ]]>
+<![CDATA[
+AND RUN_TRAIN_DATE < TO_DATE(#{startDate},'MMDDYYYY')+1]]>
+			and 
+			(STATION_1 = #{startStation} OR
+			STATION_2 = #{startStation} OR  STATION_3 = #{startStation} 
+			OR  STATION_4 = #{startStation} OR  STATION_5 = #{startStation}
+			OR  STATION_6 = #{startStation} OR  STATION_7 = #{startStation}
+			OR  STATION_8 = #{startStation} OR  STATION_9 = #{startStation}
+			OR  STATION_10 = #{startStation})
+			and (STATION_1 = #{endStation} OR  STATION_2 = #{endStation} 
+			OR  STATION_3 = #{endStation} OR  STATION_4 = #{endStation} 
+			OR  STATION_5 = #{endStation} OR  STATION_6 = #{endStation} 
+			OR  STATION_7 = #{endStation} OR  STATION_8 = #{endStation} 
+			OR  STATION_9 = #{endStation} OR  STATION_10=#{endStation})
+</select>
+	<!-- 예매확인 -->
+	<select id="select" resultType="Erp" parameterType="Command">
+		  select r.reseve_code reserveNo, s.run_train_code trainNo, r.start_station startStation, 
+		s.start_time startTime, r.end_station endStation, s.end_time endTime, s.seat_num seatNum, r.id id, r.PAY pay
+		from RESERVE r, SEAT s
+		where R.SEAT_NUM = S.SEAT_NUM and
+		R.RUN_TRAIN_CODE = S.RUN_TRAIN_CODE and
+		R.START_TIME = S.START_TIME and
+		${searchKey} = #{searchVal}
+		order by 1 asc
+	</select>
+	<!-- 관리자회원예매확인 -->
+	<select id="selectAdminMem" resultType="Erp">
+		select 
+		reseve_code as reserveNo,
+		run_train_code as trainNo,
+		start_station as startStation,
+		end_station as arriveStation,
+		start_time as startTime,
+		end_time as endTime,
+		seat_num as seatNum,
+		id as id,
+		train_name as trainName
+		
+		 from v_rvmem_admin
+		 
+	</select>
+	<!-- 관리자비회원예매확인 -->
+	<select id="selectAdminNoMem" resultType="Erp">
+		select 
+		reseve_code as reserveNo,
+		run_train_code as trainNo,
+		start_station as startStation,
+		end_station as arriveStation,
+		start_time as startTime,
+		end_time as endTime,
+		seat_num as seatNum,
+		phone as id,
+		train_name as trainName
+		 from v_rvnomem_admin
+	</select>
+	
+	<!-- 예매하기 -->
+	<insert id="insert"  parameterType="Erp">
+		insert into RESERVE(RESEVE_CODE,START_TIME,RUN_TRAIN_CODE,SEAT_NUM,START_STATION,END_STATION,PAY,ID)
+		values('reserve'||reserveSeq.nextVal ,to_date(#{startTime},'MM/DD/YYYY hh24:mi:ss'),#{trainCode},#{seatNum},#{startStation},#{endStation},#{pay},#{id})
+	</insert>
+	
+	
+	
+	<!-- 좌석 선택 -->
+	<insert id="insertSeat" parameterType="Erp">
+		insert into SEAT(RUN_TRAIN_CODE,SEAT_NUM,START_TIME,END_TIME)
+		values(#{trainCode},#{seatNum},to_date(#{startTime},'mmddyyyy hh24:mi:ss'),
+		to_date(#{endTime},'mmddyyyy hh24:mi:ss'))
+	</insert>
+	
+	<!-- 예매취소 -->
+	<delete id="delete" parameterType="Command">
+	delete from reserve
+	where ${searchKey} = #{searchVal}
+	</delete>
+	<select id="selectTrainTime" resultType="Erp" parameterType="Command" >
+		select run_timecode as runTrainCode, run_train_code as trainCode from RUN_TRAIN
+		where ${searchKey} = #{searchVal}
+	</select>
+	
+	<select id="selectRunTime" resultType="Erp" parameterType="Erp" >
+		select ${start} as startTime, ${end} as endTime from RUN_STN_TIME 
+		where run_timecode = #{trainTime}
+	</select>
+	<!--열차회원예매 insert -->
+	<insert id="rvminsert" parameterType="Erp">
+	insert into TRAIN_MEM_RESERV(RESERV_CODE,ID)values(rvmSeq.nextval,#{id})
+	</insert>
+	<!--열차회원예매 select-->
+	<select id="rvmselect" resultType="Erp" parameterType="Erp">
+	select RESERV_CODE as reseveCode from TRAIN_MEM_RESERV where id = #{id}
+	</select>
+	
+	
+	<!--관리자 운행열차 인서트  -->
+	<insert id="runTraininsert"  parameterType="RunTrain">
+	insert into RUN_TRAIN(RUN_TRAIN_CODE,RUN_TIMECODE,RAILLINE_CODE,TRAIN_CODE,RUN_TRAIN_DATE)
+    values(#{runTrainCode},#{runTimeCode},#{railLineCode},#{trainCode},to_date(#{runTrainDate},'YYYYMMDD'))
+	</insert>
+	<!--관리자 운행열차 리스트 -->
+	<select id="runTrainlist" resultType="RunTrain">
+	select 
+	RUN_TRAIN_CODE as runTrainCode,
+	RUN_TIMECODE as runTimeCode,
+	RAILLINE_CODE as railLineCode,
+	TRAIN_CODE as trainCode,
+	RUN_TRAIN_DATE as runTrainDate
+	from RUN_TRAIN
+	</select>
+	<delete id="runTrainRemove" parameterType="RunTrain">
+	delete RUN_TRAIN where RUN_TRAIN_CODE = #{runTrainCode}
+	</delete>
+	<!-- 좌석 가져오기 -->
+	<select id="seatSel" resultType="Erp" parameterType="Command">
+		select seat_num as seatNum
+ from seat
+		where ${searchKey} = #{searchVal}
+	</select>
+	
+		<!-- 예매관리 -->
+	<select id="reserveAdmin" parameterType="Command" resultType="Erp">
+		select t2.* from (select
+          rownum as seq, t.* 
+         from(select r.reseve_code reserveNo, s.run_train_code trainNo, r.start_station startStation, 
+		s.start_time startTime, r.end_station endStation, s.end_time endTime, s.seat_num seatNum, r.id id, r.PAY pay
+		from RESERVE r, SEAT s
+		where R.SEAT_NUM = S.SEAT_NUM and
+		R.RUN_TRAIN_CODE = S.RUN_TRAIN_CODE and
+		R.START_TIME = S.START_TIME
+		order by 1 asc ) t)t2 
+    	where t2.seq between #{start} and #{end}
+    	order by t2.seq asc
+	</select>
+	<!-- 운임요금 -->
+	<select id="destance" resultType="Erp" parameterType="Command">
+		 select distance as pay from station
+    where station_name = #{searchVal}
+	</select>
+	<!--좌석번호 추출  -->
+	<select id="seatNum" resultType="Erp" parameterType="Command" >
+		 select seat_num as seatNum from reserve
+  where ${searchKey} = #{searchVal}
+	</select>
+	<!--좌석번호 삭제  -->
+	<delete id="deleteSeat" parameterType="Command">
+	delete from seat
+	where seat_Num = #{searchKey} and RUN_TRAIN_CODE = #{searchVal}
+	</delete>
+	<!--카운트  -->
+		<select id="count" resultType="int">
+	select count(*) from reserve
+	</select>
+</mapper> 

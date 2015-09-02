@@ -1,0 +1,23 @@
+@CHARSET "EUC-KR";
+.trtitle{
+	
+	background-color: #80ffff;
+	border: 1px solid black;
+	border-collapse: collapse;
+	width: 1200px;
+	text-align: center;
+	font-family: "µ¸¿ò" sans-serif;
+	height: 30px;
+}
+.trinfo{
+	background-color: white;
+	height: 50px;
+	text-align: center;
+	border: 1px solid black;
+	border-collapse: collapse;
+	
+}
+.seatsel{
+	border: 1px solid black;
+	background-color: white;
+}

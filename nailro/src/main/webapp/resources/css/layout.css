@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+#wrap, #header,#content,#footer{
+	width: 1070px;
+	margin: 0 auto;
+}

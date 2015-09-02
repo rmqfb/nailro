@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nailro.mapper.RailLineMapper">
+	<select id="list" resultType="Rail" parameterType="Command">
+		select seq,RAILLINE_CODE as lineCode,RAILLINE_NAME as lineName
+		from (select rownum as seq, r.* from RUN_station r)
+		where seq between #{start} and #{end}
+		order by seq desc
+
+		<!-- select * from (select rownum as seq, r.* from RUN_station r) where 
+			seq between #{start} and #{end} order by seq desc -->
+	</select>
+	<!-- railList -->
+	<select id="railList" resultType="Rail" parameterType="Command">
+	select RAILLINE_CODE as lineCode,RAILLINE_NAME as lineName,station_1 as station1,station_2 as station2
+	,station_3 as station3,station_4 as station4,station_5 as station5,station_6 as station6,station_7 as station7
+	,station_8 as station8,station_9 as station9,station_10 as station10
+	from run_station where RAILLINE_CODE=#{lineCode}
+	</select>
+		
+	<select id="countAll" resultType="int">
+		select count(*) from RUN_station
+	</select>
+	<insert id="insert" parameterType="Rail">
+    	insert into run_station 
+    	(RAILLINE_CODE,RAILLINE_NAME,STATION_1,STATION_2,STATION_3,STATION_4,STATION_5,STATION_6,STATION_7,STATION_8,STATION_9,STATION_10)
+		 values
+		 ('rsn'||RSTATIONSEQ.nextval,
+		 #{lineName},#{station1},#{station2},#{station3},#{station4},#{station5},#{station6},#{station7},#{station8},#{station9},#{station10}
+		 )
+    </insert>
+    <update id="update" parameterType="Rail">
+    	update run_station set RAILLINE_NAME=#{lineName},STATION_1=#{station1},
+				STATION_2=#{station2},STATION_3=#{station3},STATION_4=#{station4},STATION_5=#{station5}
+				,STATION_6=#{station6},STATION_7=#{station7},STATION_8=#{station8},STATION_9=#{station9}
+				,STATION_10=#{station10} where RAILLINE_CODE=#{lineCode}
+    </update>
+      <delete id="delete" parameterType="String">
+        delete from run_station where RAILLINE_CODE=#{lineCode}
+    </delete>
+</mapper>

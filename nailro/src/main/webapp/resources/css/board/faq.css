@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* Lined Tab Navigation */
+.tab.line{padding:0 0 35px 0; width: 900px; margin: 0 0 0 400px;}
+.tab.line ul{position:relative; padding:0;list-style:none;border-bottom:1px solid #ccc;font-family:Tahoma, Sans-serif;font-size:12px;*zoom:1}
+.tab.line ul:after{content:"";display:block;clear:both}
+.tab.line li{float:left;margin-bottom:-1px}
+.tab.line li a{position:relative;float:left;text-decoration:none;border:1px solid #eee;border-bottom-color:#ccc;background:#fafafa;color:#333}
+.tab.line li a span{display:inline-block;height:14px;padding:6px 25px 6px 25px;letter-spacing:-1px;cursor:pointer}
+.tab.line li ul{width:100%;position:absolute;top:40px;left:0;list-style:none;border:0;margin:0;padding:0;overflow:hidden;*zoom:1}
+.tab.line li ul:after{content:"";display:block;clear:both}
+.tab.line li li{position:relative;left:-1px;padding:0 10px;border-left:1px solid #ddd;overflow:visible}
+.tab.line li li a{padding:0;margin:0;border:0 !important;color:#666 !important;font-weight:normal;background:transparent;letter-spacing:normal}
+.tab.line li.active a{border:1px solid #ccc;border-bottom:1px solid #fff;margin-top:-1px;background:transparent}
+.tab.line li.active a span{padding-top:7px;font-weight:bold}
+.tab.line li li a:hover,
+.tab.line li li a:active,
+.tab.line li li a:focus,
+.tab.line li li.active a{font-weight:bold;letter-spacing:-1px;color:#333 !important}
+.tab.line.jx{padding:0}
+.tab.line.jx ul{border:0}
+.tab.line.jx li{float:none}
+.tab.line.jx li a{float:none;display:block;font-weight:bold;color:#333;border:1px solid #eee !important;border-bottom-color:#ccc !important;background:#fafafa !important}
+.tab.line.jx li ul{position:static;display:block;padding:5px 0;left:0;top:0}
+.tab.line.jx li li{display:inline}
+.tab.line.jx li li a{display:inline;letter-spacing:normal;border:0 !important;font-weight:normal !important;color:#666 !important;background:none !important}
+.tab.line.jx li li a:hover,
+.tab.line.jx li li a:active,
+.tab.line.jx li li a:focus{text-decoration:underline}

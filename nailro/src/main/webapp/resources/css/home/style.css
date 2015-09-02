@@ -1,0 +1,65 @@
+/*Links*/
+.aligncenter {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	clear: both;
+}
+.no_list {
+	list-style: none;
+}
+
+.no_list li {
+	padding: 0;
+	margin: 0;
+}
+.read_more {
+	float: right;
+	margin: 10px 0;
+}
+/*Header*/
+ .user-header{
+	height: 130px;
+	width: 100%; /* background:#111; */
+}
+.user-header ul {
+	list-style: none;
+	padding-top: 100px;
+} /* 수정 */
+.user-header li a {
+	float: right;
+	width: 120px;
+	font-size: 14px;
+	line-height: 14px;
+	padding: 10px 5px;
+	color: #FFF;
+	font-weight: bold;
+}
+.user-header li a span {
+	font-size: 10px;
+	color: #a1a1a1;
+}
+.user-header li a:hover {
+	text-decoration: none;
+	background: #a1a1a1;
+	color: #2D2D2D;
+}
+.user-header li a:hover span {
+	color: #FFF;
+}
+.halfwidth {
+	width: 48%;
+}
+.return {
+	float: right;
+	padding: 10px 20px;
+	color: #FFF;
+	font-size: 12px;
+}
+.return a {
+	color: #fff;
+}
+.social_main_buttons {
+	display: inline-block;
+	margin: 0 10px;
+}

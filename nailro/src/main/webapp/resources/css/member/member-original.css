@@ -1,0 +1,172 @@
+@CHARSET "UTF-8";
+.trClass {border: 2px solid black;height: 50px;}
+
+.tdClassTitle {
+	border: 2px solid black;
+	text-align: center;
+	background-color: #66CDF4;
+	color: black ; 
+	width: 150px;
+}
+.tdClassRow {
+	border: 2px solid black;
+	/* text-align: center; */
+	background-color: #ffffff;
+	color: black;
+	width: 150px;
+	height: 5px;
+}
+
+
+
+.tableClass{height: 10px;margin-left: 35%;}
+
+.loginform1{height: 262px;font-size: 0.75em;}
+
+#loginform{
+    color: #ff0080;
+    height: 750px;
+    margin-left: 500px;
+    width: 600px; /*수정  */
+    
+}
+
+
+.myTable{
+	border: 2px solid black;
+	width: 500px;
+	height :250px;
+	margin-top: 10px;
+	}
+	
+.myTd{border: 2px solid black;}
+
+.myTr{border: 2px solid black;}
+
+.myTitle{
+	border: 2px solid black;
+	width: 250px;background-color: #66CDF4;
+}
+
+.myTdRow{border: 2px solid black;}
+
+
+/*JOINfORM */
+.tableClass2{height: 300px;}
+
+/* //로그인폼 */
+.tableClass1{height: 310px;width: 100%; /*수정  */}
+
+/* //로그인폼 */
+.tableClass1{height: 310px;width: 100%; /*수정  */}
+
+.searchIdTable{width : 750px;height: 350px;}
+
+#joinform{width : 500px;height: 750px;}
+
+#joinFormView{
+	margin-top: 5px;
+	height: 750px;
+}
+
+#nonmember{height: 750px;}
+
+#boyddiv{width: 100%;height: 750px;}
+
+#nonloginview{margin-top: 8px;}
+
+#LoginFormView{margin-top: 5px;}
+
+#meSnb{
+	border-right: 1px solid #dfdcc8;
+	height: 750px; 
+	width: 10%;
+}
+
+#meSnb ul li{
+	border-top: 1px solid #dfdcc8;
+    padding-top: 10px;
+}
+
+
+#mySnb{
+	border-right: 1px solid #dfdcc8;
+	height: 750px; 
+	float : left;
+	width: 230px;
+}
+#mySnb ul li{
+	border-top: 1px solid #dfdcc8;
+    padding-top: 10px;
+}
+#ReviseMemberformView{
+	margin-top: 5px;
+	height: 750px;
+}
+#myPageFormView{
+	margin-top: -5px;
+	margin-left: -3px;
+	height: 100%;
+	width :45% ;
+}
+
+#myPageForm{
+    width : 750px;
+	height: 750px;;
+}
+
+#LeaveFormView{ margin-top: 5px;height: 750px; }
+
+#myPage{
+  height: 300px;
+  width: 85%;
+}
+
+#memberbox2 {
+  margin-left : 0 auto;	
+  height: 250px;
+  width: 500px;
+}
+#loginDiv{
+  height: 300px;
+  width: 85%;
+}
+
+#meLeaveForm{
+	border-right: 1px solid #000000;
+	border: 1px solid black;
+	margin-top: -250px;	
+	margin: 0 auto;
+	width: 850px;
+	height: 650px;
+}
+
+#adminMemberbox{
+	height: 550px;
+	width: 45%;
+	margin-left : 150px;
+	float : left;	
+
+}
+
+
+#adminLogin{
+	height: 45%;
+	width: -65%;
+    margin-left : -25%;
+}
+
+#searchIdView{
+	height: 250px;
+	width:  75%;
+    margin-top: 2%;
+    margin-left : 10%;
+}
+
+
+
+.memberAllList{border: 1px solid black;font-size: 21px;font: bold; margin-left: 10px; }
+
+.memberAllList tr th{height: 20px; border: 1px solid black; background-color: yellow}
+
+.memberAllList tr td{height: 20px; border: 1px solid black; font-size: 18px;}
